@@ -22,14 +22,21 @@ export function useCli() {
     const result = executeCommand(trimmed);
     if (result.type === "clear") {
       dispatch({ type: "clear" });
+      if (result.headshot) {
+        dispatch({ type: "setHeadshot", variant: result.headshot });
+      }
       return;
     }
     dispatch({ type: "append", lines: [...result.lines, ""] });
     dispatch({ type: "remember", command: trimmed });
+    if (result.headshot) {
+      dispatch({ type: "setHeadshot", variant: result.headshot });
+    }
   }, []);
 
   const output = useMemo(() => state.output, [state.output]);
+  const headshot = useMemo(() => state.headshot, [state.headshot]);
 
-  return { output, runCommand };
+  return { output, runCommand, headshot };
 }
 

@@ -1,18 +1,23 @@
 "use client";
 
+export type HeadshotVariant = "normal" | "happy";
+
 export type CliState = {
   output: string[];
   history: string[];
+  headshot: HeadshotVariant;
 };
 
 export type CliAction =
   | { type: "append"; lines: string[] }
   | { type: "clear" }
-  | { type: "remember"; command: string };
+  | { type: "remember"; command: string }
+  | { type: "setHeadshot"; variant: HeadshotVariant };
 
 export const initialCliState: CliState = {
   output: [],
-  history: []
+  history: [],
+  headshot: "normal"
 };
 
 export function cliReducer(state: CliState, action: CliAction): CliState {
@@ -23,6 +28,8 @@ export function cliReducer(state: CliState, action: CliAction): CliState {
       return { ...state, output: [] };
     case "remember":
       return { ...state, history: [...state.history, action.command] };
+    case "setHeadshot":
+      return { ...state, headshot: action.variant };
     default:
       return state;
   }

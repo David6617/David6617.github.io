@@ -17,7 +17,8 @@
   width: min(1120px, 100%);
   display: grid;
   grid-template-columns: 1.15fr 1fr;
-  grid-template-rows: auto 1fr;
+  /* Fixed-height CLI strip so output scrolls inside instead of resizing the layout. */
+  grid-template-rows: auto minmax(0, 480px);
   gap: 22px;
 }
 
@@ -58,16 +59,15 @@
 }
 
 .name {
-  font-family: ui-rounded, "Comic Sans MS", "Segoe Print", system-ui, sans-serif;
-  font-size: 44px;
+  font-size: 54px;
   letter-spacing: 0.5px;
   line-height: 1;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .meta {
   color: var(--muted);
-  font-size: 14px;
+  font-size: 24px;
 }
 
 .resume {
@@ -89,13 +89,25 @@
 }
 
 .socialIcon {
-  width: 30px;
-  height: 22px;
+  width: 34px;
+  height: 34px;
   display: grid;
   place-items: center;
   border: 2px solid var(--borderSoft);
   color: var(--muted);
-  font-size: 12px;
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.socialIcon:hover {
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.socialSvg {
+  width: 18px;
+  height: 18px;
+  display: block;
 }
 
 .headerRight {
@@ -110,7 +122,7 @@
   border: 2px solid var(--borderSoft);
   padding: 10px 12px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 23px;
   line-height: 1.45;
   white-space: pre;
 }
@@ -126,14 +138,22 @@
 
 .bottom {
   grid-column: 1 / -1;
-  min-height: 440px;
+  min-height: 0;
   padding: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.bottom > * {
+  flex: 1;
+  min-height: 0;
 }
 
 @media (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: auto auto minmax(0, 240px);
   }
 
   .headerLeft {
