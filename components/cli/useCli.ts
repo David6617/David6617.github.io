@@ -18,6 +18,7 @@ export function useCli() {
     const trimmed = raw.trim();
     if (!trimmed) return;
 
+    dispatch({ type: "clear" });
     dispatch({ type: "append", lines: [`> ${trimmed}`] });
     const result = executeCommand(trimmed);
     if (result.type === "clear") {

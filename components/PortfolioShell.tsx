@@ -50,21 +50,43 @@ function IconEmail(props: SVGProps<SVGSVGElement>) {
 }
 
 const TUX = {
-  normal: "/Tux/Tux_Normal.gif",
-  happy: "/Tux/Tux_Happy.gif"
+  tux_angry: "/Tux/Tux_Angry.gif",
+  tux_sad: "/Tux/Tux_Sad.gif",
+  tux_normal: "/Tux/Tux_Normal.gif",
+  tux_happy: "/Tux/Tux_Happy.gif",
+  shirt_angry: "/Shirt/Shirt_Angry.gif",
+  shirt_sad: "/Shirt/Shirt_Sad.gif",
+  shirt_normal: "/Shirt/Shirt_Normal.gif",
+  shirt_happy: "/Shirt/Shirt_Happy.gif",
+  pj_angry: "/PJ/PJ_Angry.gif",
+  pj_sad: "/PJ/PJ_Sad.gif",
+  pj_normal: "/PJ/PJ_Normal.gif",
+  pj_happy: "/PJ/PJ_Happy.gif"
 } as const;
+
+function formatHeadshotAlt(variant: keyof typeof TUX) {
+  const [set, mood] = variant.split("_", 2);
+  const setLabel = set ? set[0]!.toUpperCase() + set.slice(1) : "Headshot";
+  const moodLabel = mood ? mood[0]!.toUpperCase() + mood.slice(1) : "";
+  return moodLabel ? `${setLabel} ${moodLabel}` : setLabel;
+}
 
 export function PortfolioShell() {
   const { output, runCommand, headshot } = useCli();
 
+  const headshotKey = useMemo(() => {
+    if (headshot in TUX) return headshot as keyof typeof TUX;
+    return "tux_normal";
+  }, [headshot]);
+
   const menuLines = useMemo(
     () => [
       "> Please select an option:",
-      ">",
       "> About me",
       "> Experience",
       "> Portfolio",
-      "> More stuff"
+      "> Lets chat!",
+      "> Help"
     ],
     []
   );
@@ -72,15 +94,15 @@ export function PortfolioShell() {
   return (
     <main className={styles.page}>
       <div className={styles.topRight}>
-        <AudioToggle src="/Sountrack1.mp3" />
+        <AudioToggle src="/Milo_song.wav" />
       </div>
 
       <section className={styles.grid}>
         <div className={styles.headerLeft}>
           <div className={styles.headshotWrap}>
             <Image
-              src={TUX[headshot]}
-              alt={headshot === "happy" ? "Tux happy" : "Tux normal"}
+              src={TUX[headshotKey]}
+              alt={formatHeadshotAlt(headshotKey)}
               fill
               className={styles.headshot}
               priority
