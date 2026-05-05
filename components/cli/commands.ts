@@ -20,9 +20,15 @@ const COMMANDS: Record<string, () => CommandResult> = {
   experience: () => ({
     type: "lines",
     lines: [
-      "Experience (placeholder):",
-      "- Company A — Role — Dates",
-      "- Company B — Role — Dates"
+      "Here's all the jobs I've had so far!",
+      "**Full Stack Developer @ Leap Tools Inc.**",
+      " > Janurary 2026 - April 2026 in **Toronto**",
+      "**Software Developer @ Alink Computer Solutions Inc.**",
+      " > May 2025 - August 2025 in **London**",
+      "**Project Coordinator @ University of Waterloo**",
+      " > May 2025 - August 2025 in **Waterloo**",
+      "**Research Assistant @ University of Wuhan**",
+      " > August 2023 in **Wuhan**",
     ]
   }),
   portfolio: () => ({

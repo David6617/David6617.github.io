@@ -116,7 +116,7 @@ export function PortfolioShell() {
             <div className={styles.meta}>Previous: Leap Tools Inc.</div>
             <a
               className={styles.resume}
-              href="https://drive.google.com/file/d/1x_rotlGxbkcAnIwRq3jSHpLP86gZzyxr/view?usp=sharing"
+              href="https://drive.google.com/file/d/1nRVIxZBhlgijnrcZqi98rqFShbzQ5-SR/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
             >
