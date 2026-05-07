@@ -16,10 +16,48 @@ function renderInlineBold(text: string) {
   });
 }
 
+function renderInlineLinksAndBold(text: string) {
+  const nodes: React.ReactNode[] = [];
+  const linkRe = /\[([^\]]+)\]\(((?:https?:\/\/|mailto:)[^)]+)\)/g;
+
+  let lastIdx = 0;
+  let match: RegExpExecArray | null;
+  while ((match = linkRe.exec(text)) !== null) {
+    const start = match.index;
+    const full = match[0]!;
+    const label = match[1]!;
+    const href = match[2]!;
+
+    if (start > lastIdx) {
+      nodes.push(<Fragment key={`t-${lastIdx}`}>{renderInlineBold(text.slice(lastIdx, start))}</Fragment>);
+    }
+
+    nodes.push(
+      <a
+        key={`a-${start}`}
+        className={styles.outputLink}
+        href={href}
+        target={href.startsWith("http") ? "_blank" : undefined}
+        rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+      >
+        {renderInlineBold(label)}
+      </a>
+    );
+
+    lastIdx = start + full.length;
+  }
+
+  if (lastIdx < text.length) {
+    nodes.push(<Fragment key={`t-${lastIdx}`}>{renderInlineBold(text.slice(lastIdx))}</Fragment>);
+  }
+
+  return nodes;
+}
+
 export function OutputTerminal({ lines }: Props) {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const stickToBottomRef = useRef(true);
-  const renderedLines = useMemo(() => lines.map(renderInlineBold), [lines]);
+  const renderedLines = useMemo(() => lines.map(renderInlineLinksAndBold), [lines]);
 
   useEffect(() => {
     const el = scrollerRef.current;

@@ -9,7 +9,7 @@ export function useCli() {
     ...initialCliState,
     output: [
       "> Hello I'm David! Welcome to my website :D",
-      "> Type 'help' to see available commands.",
+      "> Type 'help' to list all available commands.",
       ""
     ]
   }));
@@ -19,7 +19,8 @@ export function useCli() {
     if (!trimmed) return;
 
     dispatch({ type: "clear" });
-    dispatch({ type: "append", lines: [`> ${trimmed}`] });
+    const safe = trimmed.replaceAll("*", "");
+    dispatch({ type: "append", lines: [`> **${safe}**`] });
     const result = executeCommand(trimmed);
     if (result.type === "clear") {
       dispatch({ type: "clear" });

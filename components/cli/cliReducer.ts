@@ -1,6 +1,6 @@
 "use client";
 
-export type HeadshotVariant = "normal" | "happy";
+export type HeadshotVariant = "tux_normal" | "tux_happy";
 
 export type CliState = {
   output: string[];
@@ -17,7 +17,7 @@ export type CliAction =
 export const initialCliState: CliState = {
   output: [],
   history: [],
-  headshot: "normal"
+  headshot: "tux_normal"
 };
 
 export function cliReducer(state: CliState, action: CliAction): CliState {

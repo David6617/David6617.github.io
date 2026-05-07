@@ -13,6 +13,96 @@
   z-index: 10;
 }
 
+.musicWrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.musicHint {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: var(--text);
+  text-decoration: underline;
+  font-size: 24px;
+  font-family: inherit;
+  cursor: pointer;
+  opacity: 0.95;
+}
+
+.musicHint:hover {
+  opacity: 1;
+}
+
+.musicPanel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  width: min(420px, calc(100vw - 28px));
+  background: #000;
+  border: 3px solid #fff;
+  padding: 14px 14px 12px;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.65);
+  font-family: inherit; /* same as CLI (global font) */
+  color: #fff;
+}
+
+.musicTitle {
+  font-size: 26px;
+  font-weight: bold;
+  letter-spacing: 0.2px;
+}
+
+.musicDivider {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.55);
+  margin: 10px 0 12px;
+}
+
+.musicBody {
+  font-size: 24px;
+  line-height: 1.35;
+}
+
+.musicLink {
+  display: inline-block;
+  margin-top: 14px;
+  color: #fff;
+  text-decoration: underline;
+  font-size: 24px;
+}
+
+.musicIcons {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.musicIcon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+}
+
+.musicIcon:hover {
+  border-color: #fff;
+  color: #fff;
+}
+
+.musicSvg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
 .grid {
   width: min(1120px, 100%);
   display: grid;

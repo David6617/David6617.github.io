@@ -3,8 +3,11 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "David Hang",
-  description: "CLI-style portfolio"
+  title: "David's Website!",
+  description: "CLI-style portfolio",
+  icons: {
+    icon: "/Tux/Tux_Normal.gif"
+  }
 };
 
 const omoriFont = localFont({

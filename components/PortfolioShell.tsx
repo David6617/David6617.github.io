@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, type SVGProps } from "react";
+import { useEffect, useMemo, useRef, useState, type SVGProps } from "react";
 import styles from "./PortfolioShell.module.css";
 import { AudioToggle } from "./audio/AudioToggle";
 import { CommandInput } from "./cli/CommandInput";
@@ -28,6 +28,37 @@ function IconX(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
+
+function IconInstagram(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path
+        d="M7 2.5h10A4.5 4.5 0 0 1 21.5 7v10A4.5 4.5 0 0 1 17 21.5H7A4.5 4.5 0 0 1 2.5 17V7A4.5 4.5 0 0 1 7 2.5Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M17.25 6.75h.01"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function IconYouTube(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
+      <path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2 31.3 31.3 0 0 0 2 12a31.3 31.3 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.3 31.3 0 0 0 22 12a31.3 31.3 0 0 0-.4-4.8ZM10.2 15.2V8.8L15.8 12l-5.6 3.2Z" />
     </svg>
   );
 }
@@ -73,15 +104,39 @@ function formatHeadshotAlt(variant: keyof typeof TUX) {
 
 export function PortfolioShell() {
   const { output, runCommand, headshot } = useCli();
+  const [musicOpen, setMusicOpen] = useState(false);
+  const musicWrapRef = useRef<HTMLDivElement | null>(null);
 
   const headshotKey = useMemo(() => {
     if (headshot in TUX) return headshot as keyof typeof TUX;
     return "tux_normal";
   }, [headshot]);
 
+  useEffect(() => {
+    if (!musicOpen) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMusicOpen(false);
+    };
+    const onMouseDown = (e: MouseEvent) => {
+      const el = musicWrapRef.current;
+      if (!el) return;
+      if (e.target instanceof Node && !el.contains(e.target)) {
+        setMusicOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("mousedown", onMouseDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("mousedown", onMouseDown);
+    };
+  }, [musicOpen]);
+
   const menuLines = useMemo(
     () => [
-      "> Please select an option:",
+      "Type out a command to get started!",
       "> About me",
       "> Experience",
       "> Portfolio",
@@ -94,7 +149,75 @@ export function PortfolioShell() {
   return (
     <main className={styles.page}>
       <div className={styles.topRight}>
-        <AudioToggle src="/Milo_song.wav" />
+        <div ref={musicWrapRef} className={styles.musicWrap}>
+          <AudioToggle src="/Milo_song.wav" />
+          <button
+            type="button"
+            className={styles.musicHint}
+            onClick={() => setMusicOpen((v) => !v)}
+            aria-expanded={musicOpen}
+            aria-controls="music-panel"
+          >
+            Like the music? (Click Here!)
+          </button>
+
+          {musicOpen ? (
+            <div id="music-panel" className={styles.musicPanel} role="dialog" aria-label="About the music">
+              <div className={styles.musicTitle}>About the music:</div>
+              <div className={styles.musicDivider} aria-hidden="true" />
+              <div className={styles.musicBody}>
+                This song was composed by my good friend Milo Gavin! I&apos;ve linked all his
+                socials underneath, please go check him out if you ever need cool music ;D
+              </div>
+              <a
+                className={styles.musicLink}
+                href="https://milogavin.ca"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                milogavin.ca
+              </a>
+              <div className={styles.musicIcons} aria-label="Links">
+                <a
+                  className={styles.musicIcon}
+                  href="https://www.instagram.com/pokenem24/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                >
+                  <IconInstagram className={styles.musicSvg} />
+                </a>
+                <a
+                  className={styles.musicIcon}
+                  href="https://www.youtube.com/@pokenem"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="YouTube"
+                >
+                  <IconYouTube className={styles.musicSvg} />
+                </a>
+                <a
+                  className={styles.musicIcon}
+                  href="mailto:milo.gavin@gmail.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Email"
+                >
+                  <IconEmail className={styles.musicSvg} />
+                </a>
+                <a
+                  className={styles.musicIcon}
+                  href="https://www.linkedin.com/in/milo-gavin-25658a342/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                >
+                  <IconLinkedIn className={styles.musicSvg} />
+                </a>
+              </div>
+            </div>
+          ) : null}
+        </div>
       </div>
 
       <section className={styles.grid}>

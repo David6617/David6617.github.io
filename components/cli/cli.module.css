@@ -57,3 +57,13 @@
   word-break: break-word;
 }
 
+.outputLink {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.outputLink:hover {
+  opacity: 0.9;
+}
+
