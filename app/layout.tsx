@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "David's Website!",
-  description: "CLI-style portfolio",
+  description: "David Hang's Personal Website!",
   icons: {
     icon: "/Tux/Tux_Normal.gif"
   }
