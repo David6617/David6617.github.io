@@ -19,13 +19,41 @@ export function useAudioPlayer(src: string) {
     audio.addEventListener("play", onPlay);
     audio.addEventListener("pause", onPause);
 
-    // Try autoplay on initial load. This may be blocked by browser policy.
-    audio
-      .play()
-      .then(() => setState("playing"))
-      .catch(() => setState("blocked"));
+    let cancelled = false;
+    let cleanupAutoplayFallback: (() => void) | null = null;
+
+    const tryPlay = () =>
+      audio.play().then(
+        () => {
+          if (!cancelled) setState("playing");
+        },
+        () => {
+          if (!cancelled) setState("blocked");
+          throw new Error("autoplay blocked");
+        }
+      );
+
+    // Try autoplay on initial load. If blocked, retry on first user gesture.
+    tryPlay().catch(() => {
+      const resume = () => {
+        tryPlay().finally(() => cleanupAutoplayFallback?.());
+      };
+
+      const opts: AddEventListenerOptions = { once: true, passive: true };
+      window.addEventListener("pointerdown", resume, opts);
+      window.addEventListener("keydown", resume, { once: true });
+      window.addEventListener("touchstart", resume, opts);
+
+      cleanupAutoplayFallback = () => {
+        window.removeEventListener("pointerdown", resume, opts);
+        window.removeEventListener("keydown", resume);
+        window.removeEventListener("touchstart", resume, opts);
+      };
+    });
 
     return () => {
+      cancelled = true;
+      cleanupAutoplayFallback?.();
       audio.pause();
       audio.removeEventListener("play", onPlay);
       audio.removeEventListener("pause", onPause);

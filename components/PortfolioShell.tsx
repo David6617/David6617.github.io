@@ -236,7 +236,7 @@ export function PortfolioShell() {
           <div className={styles.identity}>
             <div className={styles.name}>David Hang</div>
             <div className={styles.meta}>Comp. Math @ University of Waterloo</div>
-            <div className={styles.meta}>Previous: Leap Tools Inc.</div>
+            <div className={styles.meta}>Prev. Full Stack @ Leap Tools Inc.</div>
             <a
               className={styles.resume}
               href="https://drive.google.com/file/d/1nRVIxZBhlgijnrcZqi98rqFShbzQ5-SR/view?usp=sharing"
