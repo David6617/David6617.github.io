@@ -14,8 +14,8 @@ export const metadata: Metadata = {
     icon: "/Tux/Tux_Normal.gif"
   },
   openGraph: {
-    title: "David's Website!",
-    description: "David Hang's Personal Website!",
+    title: "David's Headspace!",
+    description: "A glimpse into David's mind :]",
     images: [
       {
         url: "/embed.gif",
@@ -25,9 +25,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "David's Website!",
-    description: "David Hang's Personal Website!",
-    images: ["/embed.gif"]
+    title: "David's Headspace!",
+    description: "A glimpse into David's mind :]",
+    images: ["/static_embed.png"]
   }
 };
 
