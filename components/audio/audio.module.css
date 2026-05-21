@@ -19,3 +19,15 @@
   line-height: 1;
 }
 
+@media (max-width: 900px) {
+  .button {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+  }
+
+  .icon {
+    font-size: 18px;
+  }
+}
+

@@ -22,6 +22,16 @@ body {
     Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+@media (max-width: 900px) {
+  :root {
+    --cli-font-size: clamp(18px, 4.8vw, 22px);
+  }
+
+  body {
+    font-size: 15px;
+  }
+}
+
 * {
   box-sizing: border-box;
 }

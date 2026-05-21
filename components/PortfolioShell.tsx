@@ -137,10 +137,10 @@ export function PortfolioShell() {
   const menuLines = useMemo(
     () => [
       "Type out a command to get started!",
-      "> About me",
+      "> About Me",
       "> Experience",
       "> Portfolio",
-      "> Lets chat!",
+      "> Let's chat!",
       "> Help"
     ],
     []
@@ -150,7 +150,6 @@ export function PortfolioShell() {
     <main className={styles.page}>
       <div className={styles.topRight}>
         <div ref={musicWrapRef} className={styles.musicWrap}>
-          <AudioToggle src="/Milo_song.wav" />
           <button
             type="button"
             className={styles.musicHint}
@@ -160,6 +159,7 @@ export function PortfolioShell() {
           >
             Like the music? (Click Here!)
           </button>
+          <AudioToggle src="/Milo_song.wav" />
 
           {musicOpen ? (
             <div id="music-panel" className={styles.musicPanel} role="dialog" aria-label="About the music">
@@ -282,11 +282,14 @@ export function PortfolioShell() {
 
         <div className={styles.headerRight}>
           <div className={styles.menuPreview} aria-hidden="true">
-            {menuLines.map((line, idx) => (
-              <div key={idx} className={styles.menuLine}>
-                {line || "\u00A0"}
-              </div>
-            ))}
+            <div className={styles.menuIntro}>{menuLines[0]}</div>
+            <div className={styles.menuColumns}>
+              {menuLines.slice(1).map((line, idx) => (
+                <div key={idx} className={styles.menuLine}>
+                  {line}
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className={styles.cliInput}>

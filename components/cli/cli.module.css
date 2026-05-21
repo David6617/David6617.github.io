@@ -67,3 +67,25 @@
   opacity: 0.9;
 }
 
+@media (max-width: 900px) {
+  .inputWrap {
+    min-height: 0;
+    gap: 6px;
+    font-size: var(--cli-font-size);
+    line-height: 1.45;
+  }
+
+  .prompt,
+  .input {
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .output {
+    font-size: var(--cli-font-size);
+    padding: 8px 10px;
+    line-height: 1.45;
+    border-width: 2px;
+  }
+}
+
