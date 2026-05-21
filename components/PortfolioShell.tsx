@@ -4,8 +4,16 @@ import Image from "next/image";
 import { useEffect, useMemo, useRef, useState, type SVGProps } from "react";
 import styles from "./PortfolioShell.module.css";
 import { AudioToggle } from "./audio/AudioToggle";
+import { HOME_SOUNDTRACK } from "./audio/soundtrack";
 import { CommandInput } from "./cli/CommandInput";
 import { OutputTerminal } from "./cli/OutputTerminal";
+import { PageFadeOverlay } from "./transitions/PageFadeOverlay";
+import {
+  DEFAULT_HEADSHOT,
+  formatHeadshotAlt,
+  getHeadshotSrc,
+  isHeadshotVariant
+} from "./cli/headshots";
 import { useCli } from "./cli/useCli";
 
 /** Replace with your profiles; GitHub matches this repo's username. */
@@ -80,37 +88,13 @@ function IconEmail(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-const TUX = {
-  tux_angry: "/Tux/Tux_Angry.gif",
-  tux_sad: "/Tux/Tux_Sad.gif",
-  tux_normal: "/Tux/Tux_Normal.gif",
-  tux_happy: "/Tux/Tux_Happy.gif",
-  shirt_angry: "/Shirt/Shirt_Angry.gif",
-  shirt_sad: "/Shirt/Shirt_Sad.gif",
-  shirt_normal: "/Shirt/Shirt_Normal.gif",
-  shirt_happy: "/Shirt/Shirt_Happy.gif",
-  pj_angry: "/PJ/PJ_Angry.gif",
-  pj_sad: "/PJ/PJ_Sad.gif",
-  pj_normal: "/PJ/PJ_Normal.gif",
-  pj_happy: "/PJ/PJ_Happy.gif"
-} as const;
-
-function formatHeadshotAlt(variant: keyof typeof TUX) {
-  const [set, mood] = variant.split("_", 2);
-  const setLabel = set ? set[0]!.toUpperCase() + set.slice(1) : "Headshot";
-  const moodLabel = mood ? mood[0]!.toUpperCase() + mood.slice(1) : "";
-  return moodLabel ? `${setLabel} ${moodLabel}` : setLabel;
-}
-
 export function PortfolioShell() {
-  const { output, runCommand, headshot } = useCli();
+  const { output, runCommand, headshot, menuLines, isFading, fadeVariant } = useCli();
   const [musicOpen, setMusicOpen] = useState(false);
   const musicWrapRef = useRef<HTMLDivElement | null>(null);
 
-  const headshotKey = useMemo(() => {
-    if (headshot in TUX) return headshot as keyof typeof TUX;
-    return "tux_normal";
-  }, [headshot]);
+  const headshotVariant = isHeadshotVariant(headshot) ? headshot : DEFAULT_HEADSHOT;
+  const headshotSrc = useMemo(() => getHeadshotSrc(headshotVariant), [headshotVariant]);
 
   useEffect(() => {
     if (!musicOpen) return;
@@ -134,18 +118,6 @@ export function PortfolioShell() {
     };
   }, [musicOpen]);
 
-  const menuLines = useMemo(
-    () => [
-      "Type out a command to get started!",
-      "> About Me",
-      "> Experience",
-      "> Portfolio",
-      "> Let's chat!",
-      "> Help"
-    ],
-    []
-  );
-
   return (
     <main className={styles.page}>
       <div className={styles.topRight}>
@@ -159,7 +131,7 @@ export function PortfolioShell() {
           >
             Like the music? (Click Here!)
           </button>
-          <AudioToggle src="/Milo_song.wav" />
+          <AudioToggle src={HOME_SOUNDTRACK} />
 
           {musicOpen ? (
             <div id="music-panel" className={styles.musicPanel} role="dialog" aria-label="About the music">
@@ -224,8 +196,8 @@ export function PortfolioShell() {
         <div className={styles.headerLeft}>
           <div className={styles.headshotWrap}>
             <Image
-              src={TUX[headshotKey]}
-              alt={formatHeadshotAlt(headshotKey)}
+              src={headshotSrc}
+              alt={formatHeadshotAlt(headshotVariant)}
               fill
               className={styles.headshot}
               priority
@@ -301,6 +273,8 @@ export function PortfolioShell() {
           <OutputTerminal lines={output} />
         </div>
       </section>
+
+      <PageFadeOverlay active={isFading} variant={fadeVariant} />
     </main>
   );
 }

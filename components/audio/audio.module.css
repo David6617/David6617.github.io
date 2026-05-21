@@ -19,6 +19,10 @@
   line-height: 1;
 }
 
+.iconDark {
+  color: rgba(0, 0, 0, 1);
+}
+
 @media (max-width: 900px) {
   .button {
     width: 34px;
