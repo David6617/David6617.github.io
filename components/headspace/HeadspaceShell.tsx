@@ -1,6 +1,7 @@
 "use client";
 
 import { AudioToggle } from "@/components/audio/AudioToggle";
+import { MusicHint } from "@/components/audio/MusicHint";
 import { HEADSPACE_SOUNDTRACK } from "@/components/audio/soundtrack";
 import { PageFadeOverlay } from "@/components/transitions/PageFadeOverlay";
 import { useScreenTransition } from "@/components/transitions/useScreenTransition";
@@ -21,7 +22,13 @@ export function HeadspaceShell() {
       </button>
 
       <div className={styles.topRight}>
-        <AudioToggle src={HEADSPACE_SOUNDTRACK} iconTone="dark" />
+        <MusicHint tone="dark">
+          <AudioToggle
+            src={HEADSPACE_SOUNDTRACK}
+            iconTone="dark"
+            className={styles.audioToggle}
+          />
+        </MusicHint>
       </div>
 
       <div className={styles.center}>

@@ -2,7 +2,7 @@
 
 export const SCREEN_FADE_MS = 1400;
 export const HOME_SOUNDTRACK = "/Milo_song.wav";
-export const HEADSPACE_SOUNDTRACK = "/Soundtrack1.mp3";
+export const HEADSPACE_SOUNDTRACK = "/Diffused_Deep.wav";
 
 let audio: HTMLAudioElement | null = null;
 let activeFadeFrame: number | null = null;

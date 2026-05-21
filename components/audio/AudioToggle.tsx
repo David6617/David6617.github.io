@@ -6,15 +6,16 @@ import { useAudioPlayer } from "./useAudioPlayer";
 type Props = {
   src: string;
   iconTone?: "light" | "dark";
+  className?: string;
 };
 
-export function AudioToggle({ src, iconTone = "light" }: Props) {
+export function AudioToggle({ src, iconTone = "light", className }: Props) {
   const { isPlaying, toggle } = useAudioPlayer(src);
 
   return (
     <button
       type="button"
-      className={styles.button}
+      className={className ? `${styles.button} ${className}` : styles.button}
       onClick={toggle}
       aria-label={isPlaying ? "Pause soundtrack" : "Play soundtrack"}
       title={isPlaying ? "Pause" : "Play"}
