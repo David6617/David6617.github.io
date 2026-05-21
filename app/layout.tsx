@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "David's Headspace!",
     description: "A glimpse into David's mind :]",
-    images: ["/static_embed.png"]
+    images: ["/embed.gif"]
   }
 };
 
