@@ -18,8 +18,8 @@ export const metadata: Metadata = {
     description: "David Hang's Personal Website!",
     images: [
       {
-        url: "/Tux/Tux_Normal.gif",
-        alt: "Tux (Normal)"
+        url: "/embed.gif",
+        alt: "Website Embed"
       }
     ]
   },
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "David's Website!",
     description: "David Hang's Personal Website!",
-    images: ["/Tux/Tux_Normal.gif"]
+    images: ["/embed.gif"]
   }
 };
 
