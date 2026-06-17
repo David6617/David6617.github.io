@@ -213,7 +213,7 @@ export function executeCommand(
         "Hi! I'm David, a student studying Computational Mathematics at the University of Waterloo!",
         "I'm an aspiring software engineer who loves to tinker around with different technologies :P",
         "Apart from tech, I'm a part-time artist, gatcha game collector, chronic low-roller (iykyk), and a huge foodie!",
-        "This website was inspired by one of my favour games of all time, OMORI! (With a little tech twist of course)",
+        "This website was inspired by one of my favourite games of all time, OMORI! (With a little tech twist of course)",
         "If ever wanna to chat, feel free to reach out to me on my socials!"
       ]
     };
