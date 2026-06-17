@@ -59,7 +59,8 @@ function IconEmail(props: SVGProps<SVGSVGElement>) {
 }
 
 export function PortfolioShell() {
-  const { output, runCommand, headshot, menuLines, isFading, fadeVariant } = useCli();
+  const { output, runCommand, headshot, menuLines, isFading, fadeVariant, transitionTo } =
+    useCli();
 
   const headshotVariant = isHeadshotVariant(headshot) ? headshot : DEFAULT_HEADSHOT;
   const headshotSrc = useMemo(() => getHeadshotSrc(headshotVariant), [headshotVariant]);
@@ -153,6 +154,15 @@ export function PortfolioShell() {
           <OutputTerminal lines={output} />
         </div>
       </section>
+
+      <button
+        type="button"
+        className={styles.headspaceLink}
+        onClick={() => transitionTo("/headspace", "black")}
+        disabled={isFading}
+      >
+        Headspace...?  &gt;
+      </button>
 
       <PageFadeOverlay active={isFading} variant={fadeVariant} />
     </main>

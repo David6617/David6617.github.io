@@ -1,0 +1,8 @@
+:root {
+  --hs-border-thick: 4px;
+  --hs-border-thin: 2px;
+  --hs-shadow: -6px 8px 18px rgba(0, 0, 0, 0.22);
+  --hs-shadow-hover: -8px 10px 22px rgba(0, 0, 0, 0.28);
+  --hs-card-bg: #fff;
+  --hs-overlay: rgba(80, 80, 80, 0.55);
+}

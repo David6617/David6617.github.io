@@ -64,5 +64,5 @@ export function useCli() {
   const headshot = useMemo(() => state.headshot, [state.headshot]);
   const menuLines = useMemo(() => [...getMenuLines(state.menuMode)], [state.menuMode]);
 
-  return { output, runCommand, headshot, menuLines, isFading, fadeVariant };
+  return { output, runCommand, headshot, menuLines, isFading, fadeVariant, transitionTo };
 }
